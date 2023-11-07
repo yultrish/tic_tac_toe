@@ -23,7 +23,7 @@ const box5 = document.querySelector(".box5");
 const box6 = document.querySelector(".box6");
 const box7 = document.querySelector(".box7");
 const box8 = document.querySelector(".box8");
-
+const restart = document.querySelector(".restart");
 const cancelBtn = document.querySelector(".cancel-btn");
 const restartBtn = document.querySelector(".restart-btn");
 const nextBtn = document.querySelector(".next-btn");
@@ -480,10 +480,14 @@ box7.addEventListener("click", () => {
 box8.addEventListener("click", () => {
   moveBox("8");
 });
-
+restart.addEventListener("click", Restart);
 cancelBtn.addEventListener("click", cancelReset);
 restartBtn.addEventListener("click", restartGame);
 
 nextBtn.addEventListener("click", nextRound);
 
 quitBtn.addEventListener("click", restartGame);
+
+cpuBtn.addEventListener("click", newGameCPU);
+
+playerBtn.addEventListener("click", newGamePlayer);
