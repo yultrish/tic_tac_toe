@@ -158,38 +158,46 @@ function moveBox(box) {
 var isThereWinner = false;
 
 function checkWin(currentPlayer) {
-  console.log(currentPlayer);
-  for (some of win_pattern) {
-    const isContainedIn = (a, b) => {
-      for (const v of new Set(a)) {
-        if (!b.some((e) => e === v)) return false;
-      }
-      for (e of allBox) {
-        if (e.getAttribute("data-value") === "") {
-          e.classList.remove("hoverBoxX");
-          e.classList.remove("hoverBoxO");
-          e.setAttribute("click", "");
-        }
-      }
-      isThereWinner = true;
-      results();
-      return true;
-    };
-    isContainedIn(some, currentPlayer);
+  for (const pattern of win_pattern) {
+    if (isWinningPattern(pattern, currentPlayer)) {
+      updateGameBoardAndResults();
+      return;
+    }
   }
 
-  if (
-    isThereWinner === false &&
-    X_pattern.length === 5 &&
-    O_pattern.length === 4
-  ) {
-    for (all of allBox) {
-      all.classList.remove("hoverBoxO");
-      all.classList.remove("hoverBoxX");
-      all.setAttribute("click", "");
-    }
-    draw();
+  if (!isThereWinner && X_pattern.length === 5 && O_pattern.length === 4) {
+    updateGameBoardForDraw();
   }
+}
+
+function isWinningPattern(pattern, currentPlayer) {
+  for (const element of pattern) {
+    if (!currentPlayer.includes(element)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function updateGameBoardAndResults() {
+  for (const box of allBox) {
+    if (box.getAttribute("data-value") === "") {
+      box.classList.remove("hoverBoxX");
+      box.classList.remove("hoverBoxO");
+      box.setAttribute("click", "");
+    }
+  }
+  isThereWinner = true;
+  results();
+}
+
+function updateGameBoardForDraw() {
+  for (const box of allBox) {
+    box.classList.remove("hoverBoxX");
+    box.classList.remove("hoverBoxO");
+    box.setAttribute("click", "");
+  }
+  draw();
 }
 
 async function cpuTurn() {
@@ -212,6 +220,7 @@ async function cpuTurn() {
       }
     });
     await promise;
+    console.log(promise);
 
     setTimeout(cpuPlay, 5);
   }
@@ -497,5 +506,3 @@ quitBtn.addEventListener("click", restartGame);
 cpuBtn.addEventListener("click", newGameCPU);
 
 playerBtn.addEventListener("click", newGamePlayer);
-
-var boxChoice = document.getElementById(box);
