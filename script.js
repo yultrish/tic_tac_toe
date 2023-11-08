@@ -222,7 +222,7 @@ async function cpuTurn() {
     await promise;
     console.log(promise);
 
-    setTimeout(cpuPlay, 5);
+    setTimeout(cpuPlay, 2000);
   }
 
   if (oIconBtn.checked === true) {
@@ -244,7 +244,7 @@ async function cpuTurn() {
       }
     });
     await promise;
-    setTimeout(cpuPlay, 5);
+    setTimeout(cpuPlay, 2000);
   }
 }
 
