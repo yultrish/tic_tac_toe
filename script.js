@@ -79,80 +79,86 @@ function restartGame() {
 
 function moveBox(box) {
   var boxChoice = document.getElementById(box);
-  var img = document.createElement("img");
+  console.log(box);
+  if (boxChoice) {
+    var img = document.createElement("img");
 
-  if (turn.getAttribute("data-value") === "X") {
-    img.src = "./assets/icon-x.svg";
-    img.setAttribute("class", "boxPlayed");
-    boxChoice.appendChild(img);
-    boxChoice.classList.remove("hoverBoxX");
-    boxChoice.setAttribute("data-value", "X");
-    boxChoice.setAttribute("click", "");
-    turn.setAttribute("data-value", "O");
-    turn.src = "./assets/icon-o-turn.svg";
-    X_pattern.push(parseInt(boxChoice.id, 10));
-    X_pattern.sort();
-    if (xIconBtn.checked === true) {
-      gameBoard.splice(
-        parseInt(boxChoice.id, 10),
-        1,
-        (parseInt(boxChoice.id, 10), human)
-      );
-    } else {
-      gameBoard.splice(
-        parseInt(boxChoice.id, 10),
-        1,
-        (parseInt(boxChoice.id, 10), computer)
-      );
-    }
-    for (e of allBox) {
-      if (e.getAttribute("data-value") === "") {
-        e.classList.add("hoverBoxO");
-        e.classList.remove("hoverBoxX");
+    if (turn.getAttribute("data-value") === "X") {
+      img.src = "./assets/icon-x.svg";
+      img.setAttribute("class", "boxPlayed");
+      boxChoice.appendChild(img);
+      boxChoice.classList.remove("hoverBoxX");
+      boxChoice.setAttribute("data-value", "X");
+      boxChoice.setAttribute("click", "");
+      turn.setAttribute("data-value", "O");
+      turn.src = "./assets/icon-o-turn.svg";
+      X_pattern.push(parseInt(boxChoice.id, 10));
+      X_pattern.sort();
+      if (xIconBtn.checked === true) {
+        gameBoard.splice(
+          parseInt(boxChoice.id, 10),
+          1,
+          (parseInt(boxChoice.id, 10), human)
+        );
+      } else {
+        gameBoard.splice(
+          parseInt(boxChoice.id, 10),
+          1,
+          (parseInt(boxChoice.id, 10), computer)
+        );
       }
+      for (e of allBox) {
+        if (e.getAttribute("data-value") === "") {
+          e.classList.add("hoverBoxO");
+          e.classList.remove("hoverBoxX");
+        }
+      }
+      checkWin(X_pattern);
+    } else {
+      img.src = "./assets/icon-o.svg";
+      img.setAttribute("class", "boxPlayed");
+      boxChoice.appendChild(img);
+      boxChoice.classList.remove("hoverBoxO");
+      boxChoice.setAttribute("data-value", "O");
+      boxChoice.setAttribute("click", "");
+      turn.setAttribute("data-value", "X");
+      turn.src = "./assets/icon-x-turn.svg";
+      O_pattern.push(parseInt(boxChoice.id, 10));
+      O_pattern.sort();
+      if (oIconBtn.checked === true) {
+        gameBoard.splice(
+          parseInt(boxChoice.id, 10),
+          1,
+          (parseInt(boxChoice.id, 10), human)
+        );
+      } else {
+        gameBoard.splice(
+          parseInt(boxChoice.id, 10),
+          1,
+          (parseInt(boxChoice.id, 10), computer)
+        );
+      }
+      for (e of allBox) {
+        if (e.getAttribute("data-value") === "") {
+          e.classList.add("hoverBoxX");
+          e.classList.remove("hoverBoxO");
+        }
+      }
+      checkWin(O_pattern);
     }
-    checkWin(X_pattern);
+
+    if (cpuBtn.getAttribute("data-value") === "active") {
+      cpuTurn();
+    }
   } else {
-    img.src = "./assets/icon-o.svg";
-    img.setAttribute("class", "boxPlayed");
-    boxChoice.appendChild(img);
-    boxChoice.classList.remove("hoverBoxO");
-    boxChoice.setAttribute("data-value", "O");
-    boxChoice.setAttribute("click", "");
-    turn.setAttribute("data-value", "X");
-    turn.src = "./assets/icon-x-turn.svg";
-    O_pattern.push(parseInt(boxChoice.id, 10));
-    O_pattern.sort();
-    if (oIconBtn.checked === true) {
-      gameBoard.splice(
-        parseInt(boxChoice.id, 10),
-        1,
-        (parseInt(boxChoice.id, 10), human)
-      );
-    } else {
-      gameBoard.splice(
-        parseInt(boxChoice.id, 10),
-        1,
-        (parseInt(boxChoice.id, 10), computer)
-      );
-    }
-    for (e of allBox) {
-      if (e.getAttribute("data-value") === "") {
-        e.classList.add("hoverBoxX");
-        e.classList.remove("hoverBoxO");
-      }
-    }
-    checkWin(O_pattern);
-  }
-
-  if (cpuBtn.getAttribute("data-value") === "active") {
-    cpuTurn();
+    draw();
   }
 }
 
 var isThereWinner = false;
 
 function checkWin(currentPlayer) {
+  console.log(currentPlayer);
   for (some of win_pattern) {
     const isContainedIn = (a, b) => {
       for (const v of new Set(a)) {
@@ -491,3 +497,5 @@ quitBtn.addEventListener("click", restartGame);
 cpuBtn.addEventListener("click", newGameCPU);
 
 playerBtn.addEventListener("click", newGamePlayer);
+
+var boxChoice = document.getElementById(box);
